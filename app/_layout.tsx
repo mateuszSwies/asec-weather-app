@@ -1,37 +1,69 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import {
+	MD3LightTheme as DefaultTheme,
+	PaperProvider,
+} from 'react-native-paper';
+import { StyleSheet } from 'react-native';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { City } from '@/typings';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
+interface CityContextType {
+	selectedCity?: City;
+	setSelectedCity: React.Dispatch<React.SetStateAction<City | undefined>>;
 }
+
+export const CityContext = createContext<CityContextType>({
+	selectedCity: { name: '', lat: 0, lon: 0, country: '', state: '' },
+	setSelectedCity: () => {},
+});
+
+export default function RootLayout() {
+	const [selectedCity, setSelectedCity] = useState<City>();
+
+	const [loaded] = useFonts({
+		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+	});
+
+	const theme = {
+		...DefaultTheme,
+	};
+
+	useEffect(() => {
+		if (loaded) {
+			SplashScreen.hideAsync();
+		}
+	}, [loaded]);
+
+	if (!loaded) {
+		return null;
+	}
+
+	return (
+		<CityContext.Provider value={{ selectedCity, setSelectedCity }}>
+			<PaperProvider theme={theme}>
+				<SafeAreaView style={styles.container}>
+					<Stack>
+						<Stack.Screen
+							name="(tabs)"
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen name="+not-found" />
+					</Stack>
+				</SafeAreaView>
+			</PaperProvider>
+		</CityContext.Provider>
+	);
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+});
