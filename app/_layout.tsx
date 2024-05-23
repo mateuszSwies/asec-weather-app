@@ -10,6 +10,8 @@ import { StyleSheet } from 'react-native';
 import 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { City } from '@/typings';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -26,6 +28,7 @@ export const CityContext = createContext<CityContextType>({
 
 export default function RootLayout() {
 	const [selectedCity, setSelectedCity] = useState<City>();
+	const queryClient = new QueryClient();
 
 	const [loaded] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -46,19 +49,22 @@ export default function RootLayout() {
 	}
 
 	return (
-		<CityContext.Provider value={{ selectedCity, setSelectedCity }}>
-			<PaperProvider theme={theme}>
-				<SafeAreaView style={styles.container}>
-					<Stack>
-						<Stack.Screen
-							name="(tabs)"
-							options={{ headerShown: false }}
-						/>
-						<Stack.Screen name="+not-found" />
-					</Stack>
-				</SafeAreaView>
-			</PaperProvider>
-		</CityContext.Provider>
+		<QueryClientProvider client={queryClient}>
+			<CityContext.Provider value={{ selectedCity, setSelectedCity }}>
+				<PaperProvider theme={theme}>
+					<SafeAreaView style={styles.container}>
+						<Stack>
+							<Stack.Screen
+								name="(tabs)"
+								options={{ headerShown: false }}
+							/>
+							<Stack.Screen name="+not-found" />
+						</Stack>
+						<Toast />
+					</SafeAreaView>
+				</PaperProvider>
+			</CityContext.Provider>
+		</QueryClientProvider>
 	);
 }
 

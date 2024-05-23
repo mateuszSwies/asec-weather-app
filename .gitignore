@@ -20,4 +20,4 @@ expo-env.d.ts
 # @end expo-cli
 
 # ignore .env
-.env 
+# .env //temporarly disabled
