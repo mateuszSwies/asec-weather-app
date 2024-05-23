@@ -1,34 +1,69 @@
 import { CityContext } from '@/app/_layout';
+import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
 import { City } from '@/typings';
 import { Link } from 'expo-router';
-import { useContext } from 'react';
-import { Avatar, Button, Card, Text } from 'react-native-paper';
+import { useContext, useEffect, useState } from 'react';
+import { ActivityIndicator, Button, Card, Text } from 'react-native-paper';
 
-const CityListElement = ({ lat, lon, name, country, state }: City) => {
-	const { setSelectedCity, selectedCity } = useContext(CityContext);
+type CityListElementProps = {
+	city: City;
+	handleAddToFavorites: (favCity: City) => Promise<void>;
+	handleRemoveFromFavorites: (favCity: City) => Promise<void>;
+};
 
-	const handleAddToFavorite = () => {
-		console.log(selectedCity);
+const CityListElement = ({
+	city,
+	handleAddToFavorites,
+	handleRemoveFromFavorites,
+}: CityListElementProps) => {
+	const { setSelectedCity } = useContext(CityContext);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const { checkFavoriteCities, favoriteCities } = useFavoriteCitiesStore();
+
+	useEffect(() => {
+		setIsLoading(true);
+		const fetchData = async () => {
+			await checkFavoriteCities();
+		};
+		fetchData();
+		setIsLoading(false);
+	}, []);
+
+	const { name, country, state, lon, lat } = city;
+
+	const handleOnFavoritePress = async () => {
+		isAlreadyInFavorites
+			? await handleRemoveFromFavorites({ name, country, lon, lat })
+			: await handleAddToFavorites({ name, country, lon, lat });
 	};
 
 	const handleCheckWeather = () => {
-		setSelectedCity({ name, country, lon, lat, state });
+		setSelectedCity({ ...city });
 	};
+
+	const isAlreadyInFavorites = favoriteCities.some(
+		(city) =>
+			city.country === country &&
+			city.name === name &&
+			city.lat === lat &&
+			city.lon === lon
+	);
+
+	if (isLoading) {
+		return <ActivityIndicator size="large" />;
+	}
 
 	return (
 		<Card>
 			<Card.Title
 				title={name}
 				subtitle={`${country}, ${state}`}
-				// left={LeftContent}
 			/>
-			{/* <Card.Content>
-				<Text variant="bodyMedium">{lat}</Text>
-				<Text variant="bodyMedium">{lon}</Text>
-			</Card.Content> */}
-			{/* <Card.Cover source={{ uri: 'https://picsum.photos/700' }} /> */}
 			<Card.Actions>
-				<Button onPress={handleAddToFavorite}>Add to favorites</Button>
+				<Button onPress={handleOnFavoritePress}>
+					{isAlreadyInFavorites ? 'Remove from favorites' : 'Add to favorites'}
+				</Button>
 				<Link
 					href="/weather"
 					asChild

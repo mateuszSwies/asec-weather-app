@@ -34,5 +34,4 @@ export type CityWeather = {
 	weather: ShortWeatherInfo[];
 	main: MainWeatherInfo;
 	wind: WindInfo;
-	// rain: {[key as string]: number}
 };

@@ -1,36 +1,34 @@
 {
-  "expo": {
-    "name": "asec-weather-app",
-    "slug": "asec-weather-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
-  }
+	"expo": {
+		"name": "asec-sky-spy",
+		"slug": "asec-sky-spy",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/appIcon.png",
+		"scheme": "myapp",
+		"userInterfaceStyle": "automatic",
+		"splash": {
+			"image": "./assets/images/splashScreenCover.jpg",
+			"resizeMode": "cover",
+			"backgroundColor": "#000000"
+		},
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/appIcon.png",
+				"backgroundColor": "#ffffff"
+			}
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/images/appIcon.png"
+		},
+		"plugins": ["expo-router"],
+		"experiments": {
+			"typedRoutes": true
+		}
+	}
 }
