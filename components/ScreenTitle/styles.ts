@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	mainContainer: {
-		height: verticalScale(100),
+		maxHeight: verticalScale(90),
 		justifyContent: 'center',
 		alignContent: 'center',
 		alignItems: 'center',
@@ -17,9 +17,11 @@ export const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
+		height: '100%',
 	},
 	text: {
 		fontSize: moderateScale(25),
 		marginHorizontal: 'auto',
+		flex: 1,
 	},
 });

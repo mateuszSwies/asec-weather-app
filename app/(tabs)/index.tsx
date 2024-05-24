@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import { Searchbar, ActivityIndicator } from 'react-native-paper';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { City } from '@/typings';
 import { getUniqueCities } from '@/utils/getUniqueCities';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import CityList from '@/components/CityList';
 import Toast from 'react-native-toast-message';
 import AddFavoriteButton from '@/components/AddFavoriteButton';
 import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
+import FavoriteModal from '@/components/FavoriteModal';
 
 const cityUrl = (query: string) =>
 	`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}`;
@@ -17,12 +18,8 @@ const cityUrl = (query: string) =>
 const HomeScreen = () => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [finalQuery, setFinalQuery] = useState('');
-	const {
-		addFavoriteCity,
-		removeFavoriteCity,
-		checkFavoriteCities,
-		// favoriteCities,
-	} = useFavoriteCitiesStore();
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const { checkFavoriteCities, favoriteCities } = useFavoriteCitiesStore();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -32,14 +29,17 @@ const HomeScreen = () => {
 		fetchData();
 	}, []);
 
+	useLayoutEffect(() => {
+		setIsModalVisible(false);
+	}, []);
+
 	const {
 		data: cityArray,
 		isLoading,
 		isRefetching,
-		refetch,
 		error,
 	} = useQuery({
-		queryKey: ['cities'],
+		queryKey: ['cities', finalQuery],
 		enabled: !!finalQuery,
 		queryFn: () =>
 			axios.get<City[]>(cityUrl(finalQuery)).then((res) => {
@@ -57,10 +57,11 @@ const HomeScreen = () => {
 
 	const onSubmitSearch = () => {
 		setFinalQuery(searchQuery);
-		refetch();
 	};
 
-	const handleAddToFavorites = () => {};
+	const handleAddToFavorites = () => {
+		setIsModalVisible(true);
+	};
 
 	const showLoading = isLoading || isRefetching;
 
@@ -80,7 +81,10 @@ const HomeScreen = () => {
 				paddingBottom: 70,
 			}}
 		>
-			<ScreenTitle title="Your SkySpy" />
+			<ScreenTitle
+				textStyle={{ marginLeft: 60 }}
+				title="Your SkySpy"
+			/>
 			<Searchbar
 				mode="view"
 				placeholder="Check weather in your city"
@@ -91,20 +95,19 @@ const HomeScreen = () => {
 			/>
 			{showLoading && (
 				<ActivityIndicator
-					animating={true}
-					size={'large'}
+					animating
+					size="large"
 				/>
 			)}
 			{cityArray?.length === 0 && <Text>No cities available</Text>}
-			{cityArray && (
-				<CityList
-					cityArray={cityArray}
-					handleAddToFavorite={addFavoriteCity}
-					handleRemoveFromFavorites={removeFavoriteCity}
-				/>
-			)}
+			{cityArray && <CityList cityArray={cityArray} />}
 
 			<AddFavoriteButton onFavoriteButtonPress={handleAddToFavorites} />
+			<FavoriteModal
+				isOpen={isModalVisible}
+				onDismiss={() => setIsModalVisible(false)}
+				cityArray={favoriteCities}
+			/>
 		</View>
 	);
 };

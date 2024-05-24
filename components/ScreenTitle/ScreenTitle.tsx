@@ -1,22 +1,46 @@
 import { styles } from './styles';
-import { View } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { TextStyle, View } from 'react-native';
+import { Avatar, Card, Text } from 'react-native-paper';
 import WeatherLogo from '@/assets/images/cloudAndSun.svg';
+import { ComponentType } from 'react';
 
 type ScreenTitleProps = {
 	title: string;
+	textStyle?: TextStyle;
+	weatherCode?: string;
 };
 
-const ScreenTitle = ({ title }: ScreenTitleProps) => {
+const ScreenTitle = ({ title, textStyle, weatherCode }: ScreenTitleProps) => {
+	const renderIcon = () => {
+		if (weatherCode) {
+			return (
+				<Avatar.Image
+					size={90}
+					source={{
+						uri: `https://openweathermap.org/img/wn/${weatherCode}@2x.png`,
+					}}
+					style={{ backgroundColor: 'lightgrey' }}
+				/>
+			);
+		}
+		return (
+			<WeatherLogo
+				width={90}
+				height={90}
+			/>
+		);
+	};
+
 	return (
 		<View style={styles.mainContainer}>
 			<Card style={styles.card}>
 				<Card.Content style={styles.cardContent}>
-					<Text style={styles.text}>{title}</Text>
-					<WeatherLogo
+					<Text style={[styles.text, textStyle && textStyle]}>{title}</Text>
+					{renderIcon()}
+					{/* <WeatherLogo
 						width={90}
 						height={90}
-					/>
+					/> */}
 				</Card.Content>
 			</Card>
 		</View>

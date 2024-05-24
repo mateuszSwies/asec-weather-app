@@ -1,27 +1,26 @@
 import CityListElement from '@/components/CityListElement';
+import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
 import { City } from '@/typings';
 import { FlatList, View } from 'react-native';
+import { styles } from './styles';
 
 type CityListProps = {
 	cityArray: City[];
-	handleAddToFavorite: (favCity: City) => Promise<void>;
-	handleRemoveFromFavorites: (favCity: City) => Promise<void>;
 };
 
-const CityList = ({
-	cityArray,
-	handleAddToFavorite,
-	handleRemoveFromFavorites,
-}: CityListProps) => {
+const CityList = ({ cityArray }: CityListProps) => {
+	const { addFavoriteCity, removeFavoriteCity } = useFavoriteCitiesStore();
+
 	return (
-		<View>
+		<View style={styles.container}>
 			<FlatList
 				data={cityArray}
+				contentContainerStyle={styles.list}
 				renderItem={({ item }) => (
 					<CityListElement
 						city={item}
-						handleAddToFavorites={handleAddToFavorite}
-						handleRemoveFromFavorites={handleRemoveFromFavorites}
+						handleAddToFavorites={addFavoriteCity}
+						handleRemoveFromFavorites={removeFavoriteCity}
 					/>
 				)}
 				keyExtractor={(_, index) => String(index)}
