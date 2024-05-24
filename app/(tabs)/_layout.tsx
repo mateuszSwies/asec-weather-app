@@ -20,6 +20,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="index"
 				options={{
+					unmountOnBlur: true,
 					title: 'Home',
 					tabBarIcon: ({ focused }) => (
 						<TabBarIcon
@@ -33,6 +34,7 @@ export default function TabLayout() {
 				name="weather"
 				options={{
 					title: 'Weather',
+					unmountOnBlur: true,
 					tabBarIcon: ({ focused }) => (
 						<TabBarIcon
 							name={focused ? 'sunny' : 'sunny-outline'}

@@ -34,8 +34,8 @@ const CityListElement = ({
 
 	const handleOnFavoritePress = async () => {
 		isAlreadyInFavorites
-			? await handleRemoveFromFavorites({ name, country, lon, lat })
-			: await handleAddToFavorites({ name, country, lon, lat });
+			? await handleRemoveFromFavorites({ name, country, lon, lat, state })
+			: await handleAddToFavorites({ name, country, lon, lat, state });
 	};
 
 	const handleCheckWeather = () => {
