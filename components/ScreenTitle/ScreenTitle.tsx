@@ -37,10 +37,6 @@ const ScreenTitle = ({ title, textStyle, weatherCode }: ScreenTitleProps) => {
 				<Card.Content style={styles.cardContent}>
 					<Text style={[styles.text, textStyle && textStyle]}>{title}</Text>
 					{renderIcon()}
-					{/* <WeatherLogo
-						width={90}
-						height={90}
-					/> */}
 				</Card.Content>
 			</Card>
 		</View>
