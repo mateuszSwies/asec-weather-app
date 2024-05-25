@@ -9,7 +9,8 @@ type CityListProps = {
 };
 
 const CityList = ({ cityArray }: CityListProps) => {
-	const { addFavoriteCity, removeFavoriteCity } = useFavoriteCitiesStore();
+	const { addFavoriteCity, removeFavoriteCity } =
+		useFavoriteCitiesStore() || {};
 
 	return (
 		<View style={styles.container}>
