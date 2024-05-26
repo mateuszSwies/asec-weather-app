@@ -1,8 +1,8 @@
-import { CityContext } from '@/app/_layout';
 import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
+import { useSelectedCityStore } from '@/store/selectedCityStore';
 import { City } from '@/typings';
 import { Link } from 'expo-router';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Button, Card, useTheme } from 'react-native-paper';
 
 type CityListElementProps = {
@@ -16,7 +16,7 @@ const CityListElement = ({
 	onAddToFavorites,
 	onRemoveFromFavorites,
 }: CityListElementProps) => {
-	const { setSelectedCity } = useContext(CityContext);
+	const { setSelectedCity } = useSelectedCityStore();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const { colors } = useTheme();
