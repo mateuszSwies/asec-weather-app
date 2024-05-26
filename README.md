@@ -8,7 +8,9 @@ Please note that exposing API keys in the .env file is against security best pra
 
 ## Important info
 
-The application was developed on android and I am not sure if and how it can work on iOS - please take this into consideration when using it
+The application was developed on android and I am not sure if and how it can work on iOS - please take this into consideration when using it.
+
+**Due to limitations in the number of queries to the API, I decided not to display a dynamic list of hints about the searched cities as the letters are typed. Otherwise, I would have used the debounce technique and automatic search**
 
 ## Get started
 
