@@ -1,16 +1,15 @@
 import { ActivityIndicator, Text, View } from 'react-native';
 import axios from 'axios';
-import { useContext } from 'react';
-import { CityContext } from '@/app/_layout';
 import { CityWeather } from '@/typings';
 import { useQuery } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 import { styles } from './styles';
 import ScreenTitle from '@/components/ScreenTitle';
 import CityWeatherCard from '@/components/CityWeatherCard';
+import { useSelectedCityStore } from '@/store/selectedCityStore';
 
 const Weather = () => {
-	const { selectedCity } = useContext(CityContext);
+	const { selectedCity } = useSelectedCityStore();
 
 	const { name, lat, lon } = selectedCity || {};
 

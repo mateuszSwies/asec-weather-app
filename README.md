@@ -68,6 +68,7 @@ The application is built using the following technologies and libraries:
 - Expo - A framework and a platform for universal React applications.
 - React - A JavaScript library for building user interfaces.
 - React Native - A framework for building native apps using React.
+- TypeScript - A strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.
 - Axios - A promise-based HTTP client for making requests.
 - React Query - A data-fetching library for React.
 - Zustand - A small, fast, and scalable state-management solution.
