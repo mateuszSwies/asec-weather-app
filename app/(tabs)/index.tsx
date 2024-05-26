@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { Searchbar, ActivityIndicator } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import axios from 'axios';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { City } from '@/typings';
@@ -11,6 +11,8 @@ import Toast from 'react-native-toast-message';
 import AddFavoriteButton from '@/components/AddFavoriteButton';
 import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
 import FavoriteModal from '@/components/FavoriteModal';
+import Loader from '@/components/Loader';
+import { styles } from './styles';
 
 const cityUrl = (query: string) =>
 	`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${process.env.EXPO_PUBLIC_WEATHER_API_KEY}`;
@@ -75,14 +77,9 @@ const HomeScreen = () => {
 	}
 
 	return (
-		<View
-			style={{
-				flex: 1,
-				paddingBottom: 70,
-			}}
-		>
+		<View style={styles.homeContainer}>
 			<ScreenTitle
-				textStyle={{ marginLeft: 60 }}
+				textStyle={styles.homeScreenTitle}
 				title="Your SkySpy"
 			/>
 			<Searchbar
@@ -93,15 +90,9 @@ const HomeScreen = () => {
 				onIconPress={onSubmitSearch}
 				onSubmitEditing={onSubmitSearch}
 			/>
-			{showLoading && (
-				<ActivityIndicator
-					animating
-					size="large"
-				/>
-			)}
+			{showLoading && <Loader />}
 			{cityArray?.length === 0 && <Text>No cities available</Text>}
 			{cityArray && <CityList cityArray={cityArray} />}
-
 			<AddFavoriteButton onFavoriteButtonPress={handleAddToFavorites} />
 			<FavoriteModal
 				isOpen={isModalVisible}

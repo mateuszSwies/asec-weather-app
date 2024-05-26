@@ -2,8 +2,13 @@ import { View, ScrollView } from 'react-native';
 import { Card, Title, Paragraph, Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createStyles } from './styles';
+import { CityWeather } from '@/typings';
 
-const CityWeatherCard = ({ weatherData }: any) => {
+type CityWeatherCardProps = {
+	weatherData: CityWeather;
+};
+
+const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 	const theme = useTheme();
 	const styles = createStyles(theme);
 	const {
@@ -16,7 +21,7 @@ const CityWeatherCard = ({ weatherData }: any) => {
 		visibility,
 	} = weatherData;
 
-	const formatTime = (timestamp: any) => {
+	const formatTime = (timestamp: number) => {
 		const date = new Date(timestamp * 1000);
 		return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
 	};

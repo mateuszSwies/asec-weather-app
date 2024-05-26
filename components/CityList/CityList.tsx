@@ -20,8 +20,8 @@ const CityList = ({ cityArray }: CityListProps) => {
 				renderItem={({ item }) => (
 					<CityListElement
 						city={item}
-						handleAddToFavorites={addFavoriteCity}
-						handleRemoveFromFavorites={removeFavoriteCity}
+						onAddToFavorites={addFavoriteCity}
+						onRemoveFromFavorites={removeFavoriteCity}
 					/>
 				)}
 				keyExtractor={(_, index) => String(index)}

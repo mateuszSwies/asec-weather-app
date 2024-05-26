@@ -7,14 +7,14 @@ import { ActivityIndicator, Button, Card, Text } from 'react-native-paper';
 
 type CityListElementProps = {
 	city: City;
-	handleAddToFavorites: (favCity: City) => Promise<void>;
-	handleRemoveFromFavorites: (favCity: City) => Promise<void>;
+	onAddToFavorites: (favCity: City) => Promise<void>;
+	onRemoveFromFavorites: (favCity: City) => Promise<void>;
 };
 
 const CityListElement = ({
 	city,
-	handleAddToFavorites,
-	handleRemoveFromFavorites,
+	onAddToFavorites,
+	onRemoveFromFavorites,
 }: CityListElementProps) => {
 	const { setSelectedCity } = useContext(CityContext);
 	const [isLoading, setIsLoading] = useState(false);
@@ -32,10 +32,10 @@ const CityListElement = ({
 
 	const { name, country, state, lon, lat } = city;
 
-	const handleOnFavoritePress = async () => {
+	const handleFavoritePress = async () => {
 		isAlreadyInFavorites
-			? await handleRemoveFromFavorites({ name, country, lon, lat, state })
-			: await handleAddToFavorites({ name, country, lon, lat, state });
+			? await onRemoveFromFavorites(city)
+			: await onAddToFavorites(city);
 	};
 
 	const handleCheckWeather = () => {
@@ -61,7 +61,7 @@ const CityListElement = ({
 				subtitle={`${country}, ${state}`}
 			/>
 			<Card.Actions>
-				<Button onPress={handleOnFavoritePress}>
+				<Button onPress={handleFavoritePress}>
 					{isAlreadyInFavorites ? 'Remove from favorites' : 'Add to favorites'}
 				</Button>
 				<Link

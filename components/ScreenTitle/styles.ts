@@ -24,4 +24,7 @@ export const styles = StyleSheet.create({
 		marginHorizontal: 'auto',
 		flex: 1,
 	},
+	avatarStyles: {
+		backgroundColor: 'lightgrey',
+	},
 });

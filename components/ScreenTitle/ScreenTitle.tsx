@@ -2,7 +2,6 @@ import { styles } from './styles';
 import { TextStyle, View } from 'react-native';
 import { Avatar, Card, Text } from 'react-native-paper';
 import WeatherLogo from '@/assets/images/cloudAndSun.svg';
-import { ComponentType } from 'react';
 
 type ScreenTitleProps = {
 	title: string;
@@ -19,7 +18,7 @@ const ScreenTitle = ({ title, textStyle, weatherCode }: ScreenTitleProps) => {
 					source={{
 						uri: `https://openweathermap.org/img/wn/${weatherCode}@2x.png`,
 					}}
-					style={{ backgroundColor: 'lightgrey' }}
+					style={styles.avatarStyles}
 				/>
 			);
 		}

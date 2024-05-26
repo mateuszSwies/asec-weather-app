@@ -2,7 +2,7 @@ import TabBarIcon from '@/components/navigation/TabBarIcon';
 import { Tabs } from 'expo-router';
 import { useTheme } from 'react-native-paper';
 
-export default function TabLayout() {
+const TabLayout = () => {
 	const theme = useTheme();
 
 	return (
@@ -11,9 +11,7 @@ export default function TabLayout() {
 				tabBarActiveTintColor: theme.colors.primary,
 				headerShown: false,
 				tabBarLabelStyle: { fontSize: 16 },
-				tabBarStyle: {
-					height: 70,
-				},
+				tabBarStyle: { height: 70 },
 				tabBarHideOnKeyboard: true,
 			}}
 		>
@@ -45,4 +43,6 @@ export default function TabLayout() {
 			/>
 		</Tabs>
 	);
-}
+};
+
+export default TabLayout;

@@ -5,7 +5,7 @@ import { CityContext } from '@/app/_layout';
 import { CityWeather } from '@/typings';
 import { useQuery } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
-import { styles } from '@/app/(tabs)/weather-style';
+import { styles } from './styles';
 import ScreenTitle from '@/components/ScreenTitle';
 import CityWeatherCard from '@/components/CityWeatherCard';
 
@@ -20,14 +20,18 @@ const Weather = () => {
 
 	const {
 		data: weatherData,
-		isLoading,
-		error,
+		isLoading: isWeatherDataLoading,
+		error: weatherDataError,
 	} = useQuery({
 		queryKey: ['weatherData'],
 		queryFn: () =>
 			axios.get<CityWeather>(weatherForSelectedCityUrl).then((res) => res.data),
 	});
-	const { data: weatherIconCode, isLoading: isWeatherCodeLoading } = useQuery({
+	const {
+		data: weatherIconCode,
+		isLoading: isWeatherCodeLoading,
+		error: weatherCodeError,
+	} = useQuery({
 		queryKey: ['additionalWeatherData'],
 		queryFn: () =>
 			axios
@@ -35,7 +39,7 @@ const Weather = () => {
 				.then((res) => res.data.weather[0].icon),
 	});
 
-	if (!isLoading && error) {
+	if (weatherDataError || weatherCodeError) {
 		Toast.show({
 			type: 'error',
 			text1: 'Ups..',
@@ -46,8 +50,8 @@ const Weather = () => {
 
 	if (!selectedCity) {
 		return (
-			<View style={styles.noCityContainer}>
-				<Text style={styles.noCityText}>
+			<View style={styles.weatherNoCityContainer}>
+				<Text style={styles.weatherNoCityText}>
 					You didn't choose any city. Go back to the home page and search for
 					any.
 				</Text>
@@ -55,7 +59,7 @@ const Weather = () => {
 		);
 	}
 
-	if (isLoading || isWeatherCodeLoading) {
+	if (isWeatherDataLoading || isWeatherCodeLoading) {
 		return (
 			<ActivityIndicator
 				animating
@@ -65,13 +69,15 @@ const Weather = () => {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View style={styles.weatherContainer}>
 			<ScreenTitle
 				weatherCode={weatherIconCode}
-				textStyle={styles.titleText}
+				textStyle={styles.weatherTitleText}
 				title={`Current weather in ${name}`}
 			/>
-			{selectedCity && <CityWeatherCard weatherData={weatherData} />}
+			{selectedCity && weatherData && (
+				<CityWeatherCard weatherData={weatherData} />
+			)}
 		</View>
 	);
 };
