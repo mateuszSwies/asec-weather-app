@@ -1,4 +1,4 @@
-import { moderateScale } from '@/utils/dimensions';
+import { horizontalScale, moderateScale } from '@/utils/dimensions';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -23,5 +23,16 @@ export const styles = StyleSheet.create({
 	},
 	homeScreenTitle: {
 		marginLeft: 60,
+	},
+	homeNoCitiesContainer: {
+		height: '70%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignContent: 'center',
+		paddingHorizontal: horizontalScale(15),
+	},
+	homeNoCitiesText: {
+		fontSize: moderateScale(22),
+		textAlign: 'center',
 	},
 });

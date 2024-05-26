@@ -29,9 +29,9 @@ export const useFavoriteCitiesStore = create<FavoriteCitiesStore>((set) => ({
 	addFavoriteCity: async (city) => {
 		try {
 			const savedCities = await AsyncStorage.getItem(AsyncKeys.SAVED_CITIES);
-			const citiesArray = savedCities ? JSON.parse(savedCities) : [];
+			const citiesArray: City[] = savedCities ? JSON.parse(savedCities) : [];
 			const existingCityIndex = citiesArray.findIndex(
-				(c: City) =>
+				(c) =>
 					c.name === city.name &&
 					c.country === city.country &&
 					c.lat === city.lat &&
@@ -52,9 +52,9 @@ export const useFavoriteCitiesStore = create<FavoriteCitiesStore>((set) => ({
 	removeFavoriteCity: async (cityToRemove) => {
 		try {
 			const savedCities = await AsyncStorage.getItem(AsyncKeys.SAVED_CITIES);
-			const citiesArray = savedCities ? JSON.parse(savedCities) : [];
+			const citiesArray: City[] = savedCities ? JSON.parse(savedCities) : [];
 			const updatedCities = citiesArray.filter(
-				(city: City) =>
+				(city) =>
 					city.name !== cityToRemove.name ||
 					city.country !== cityToRemove.country ||
 					city.lat !== cityToRemove.lat ||

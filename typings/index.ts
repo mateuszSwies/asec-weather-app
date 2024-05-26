@@ -20,14 +20,11 @@ export type MainWeatherInfo = {
 	temp_max: number;
 	pressure: number;
 	humidity: number;
-	seaLevel?: number;
-	groundLevel?: number;
 };
 
 export type WindInfo = {
 	speed: number;
-	gust: number;
-	deg?: number;
+	gust?: number;
 };
 
 export type CityWeather = {

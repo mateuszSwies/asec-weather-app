@@ -1,12 +1,15 @@
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
+import { styles } from './styles';
 
 const Loader = () => {
 	return (
-		<ActivityIndicator
-			testID="activity-indicator"
-			animating
-			size="large"
-		/>
+		<View style={styles.container}>
+			<ActivityIndicator
+				testID="activity-indicator"
+				animating
+				size="large"
+			/>
+		</View>
 	);
 };
 
