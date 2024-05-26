@@ -3,7 +3,7 @@ import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
 import { City } from '@/typings';
 import { Link } from 'expo-router';
 import { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, Button, Card, Text } from 'react-native-paper';
+import { ActivityIndicator, Button, Card, useTheme } from 'react-native-paper';
 
 type CityListElementProps = {
 	city: City;
@@ -18,6 +18,8 @@ const CityListElement = ({
 }: CityListElementProps) => {
 	const { setSelectedCity } = useContext(CityContext);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const { colors } = useTheme();
 
 	const { checkFavoriteCities, favoriteCities } = useFavoriteCitiesStore();
 
@@ -55,7 +57,7 @@ const CityListElement = ({
 	}
 
 	return (
-		<Card>
+		<Card style={{ backgroundColor: colors.primaryContainer }}>
 			<Card.Title
 				title={name}
 				subtitle={`${country}, ${state}`}
