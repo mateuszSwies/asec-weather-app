@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import axios from 'axios';
 import { CityWeather } from '@/typings';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import { styles } from './styles';
 import ScreenTitle from '@/components/ScreenTitle';
 import CityWeatherCard from '@/components/CityWeatherCard';
 import { useSelectedCityStore } from '@/store/selectedCityStore';
+import Loader from '@/components/Loader';
 
 const Weather = () => {
 	const { selectedCity } = useSelectedCityStore();
@@ -23,6 +24,7 @@ const Weather = () => {
 		error: weatherDataError,
 	} = useQuery({
 		queryKey: ['weatherData'],
+		enabled: !!selectedCity,
 		queryFn: () =>
 			axios.get<CityWeather>(weatherForSelectedCityUrl).then((res) => res.data),
 	});
@@ -32,13 +34,14 @@ const Weather = () => {
 		error: weatherCodeError,
 	} = useQuery({
 		queryKey: ['additionalWeatherData'],
+		enabled: !!selectedCity,
 		queryFn: () =>
 			axios
 				.get(weatherIconForSelectedCityUrl)
 				.then((res) => res.data.weather[0].icon),
 	});
 
-	if (weatherDataError || weatherCodeError) {
+	if ((!isWeatherDataLoading && weatherDataError) || weatherCodeError) {
 		Toast.show({
 			type: 'error',
 			text1: 'Ups..',
@@ -59,12 +62,7 @@ const Weather = () => {
 	}
 
 	if (isWeatherDataLoading || isWeatherCodeLoading) {
-		return (
-			<ActivityIndicator
-				animating
-				size="large"
-			/>
-		);
+		return <Loader />;
 	}
 
 	return (

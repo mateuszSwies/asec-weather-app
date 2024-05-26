@@ -3,10 +3,13 @@ import { Card, Title, Paragraph, Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createStyles } from './styles';
 import { CityWeather } from '@/typings';
+import { roundToDecimalPlace } from '@/utils/roundToDecimalPlace';
 
 type CityWeatherCardProps = {
 	weatherData: CityWeather;
 };
+
+const noDataAvailable = 'N/A';
 
 const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 	const theme = useTheme();
@@ -30,7 +33,7 @@ const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 		<ScrollView style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.location}>{name}</Text>
-				<Text style={styles.temp}>{temp}°C</Text>
+				<Text style={styles.temp}>{roundToDecimalPlace(temp)}°C</Text>
 				<Text style={styles.weather}>{weather[0].description}</Text>
 			</View>
 			<View style={styles.grid}>
@@ -42,7 +45,7 @@ const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 							color="#000"
 						/>
 						<Title>Feels Like</Title>
-						<Paragraph>{feels_like}°C</Paragraph>
+						<Paragraph>{roundToDecimalPlace(feels_like)}°C</Paragraph>
 					</Card.Content>
 				</Card>
 				<Card style={styles.card}>
@@ -53,7 +56,7 @@ const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 							color="#000"
 						/>
 						<Title>Min Temp</Title>
-						<Paragraph>{temp_min}°C</Paragraph>
+						<Paragraph>{roundToDecimalPlace(temp_min)}°C</Paragraph>
 					</Card.Content>
 				</Card>
 				<Card style={styles.card}>
@@ -64,7 +67,7 @@ const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 							color="#000"
 						/>
 						<Title>Max Temp</Title>
-						<Paragraph>{temp_max}°C</Paragraph>
+						<Paragraph>{roundToDecimalPlace(temp_max)}°C</Paragraph>
 					</Card.Content>
 				</Card>
 				<Card style={styles.card}>
@@ -109,7 +112,7 @@ const CityWeatherCard = ({ weatherData }: CityWeatherCardProps) => {
 						/>
 						<Title>Wind Speed</Title>
 						<Paragraph>{speed} m/s</Paragraph>
-						<Paragraph>Gusts: {gust} m/s</Paragraph>
+						<Paragraph>Gusts: {gust || noDataAvailable} m/s</Paragraph>
 					</Card.Content>
 				</Card>
 				<Card style={styles.card}>

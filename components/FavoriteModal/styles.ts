@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
 	},
 	modalContent: {
 		width: '100%',
-		paddingBottom: 100,
 	},
 	headerContent: {
 		display: 'flex',
@@ -34,8 +33,9 @@ export const styles = StyleSheet.create({
 		marginLeft: 'auto',
 	},
 	text: {
-		fontSize: moderateScale(16),
+		fontSize: moderateScale(18),
 		marginLeft: horizontalScale(15),
 		fontWeight: 'bold',
+		color: 'black',
 	},
 });

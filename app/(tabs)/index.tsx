@@ -91,7 +91,13 @@ const HomeScreen = () => {
 				onSubmitEditing={onSubmitSearch}
 			/>
 			{showLoading && <Loader />}
-			{cityArray?.length === 0 && <Text>No cities available</Text>}
+			{cityArray?.length === 0 && (
+				<View style={styles.homeNoCitiesContainer}>
+					<Text style={styles.homeNoCitiesText}>
+						Hmmm, it looks like we can't find a city like that
+					</Text>
+				</View>
+			)}
 			{cityArray && <CityList cityArray={cityArray} />}
 			<AddFavoriteButton onFavoriteButtonPress={handleAddToFavorites} />
 			<FavoriteModal

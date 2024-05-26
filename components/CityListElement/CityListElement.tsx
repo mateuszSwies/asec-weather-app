@@ -1,9 +1,10 @@
+import Loader from '@/components/Loader';
 import { useFavoriteCitiesStore } from '@/store/favoriteCitiesStore';
 import { useSelectedCityStore } from '@/store/selectedCityStore';
 import { City } from '@/typings';
 import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Button, Card, useTheme } from 'react-native-paper';
+import { Button, Card, useTheme } from 'react-native-paper';
 
 type CityListElementProps = {
 	city: City;
@@ -53,7 +54,7 @@ const CityListElement = ({
 	);
 
 	if (isLoading) {
-		return <ActivityIndicator size="large" />;
+		return <Loader />;
 	}
 
 	return (
