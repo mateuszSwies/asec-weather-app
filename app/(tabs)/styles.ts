@@ -1,3 +1,4 @@
+import { moderateScale } from '@/utils/dimensions';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -5,14 +6,14 @@ export const styles = StyleSheet.create({
 		marginTop: 140,
 	},
 	weatherNoCityText: {
-		fontSize: 20,
+		fontSize: moderateScale(20),
 		textAlign: 'center',
 	},
 	weatherContainer: {
 		flex: 1,
 	},
 	weatherTitleText: {
-		fontSize: 25,
+		fontSize: moderateScale(20),
 		textAlign: 'center',
 		marginRight: 10,
 	},
