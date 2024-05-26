@@ -49,7 +49,7 @@ export const useFavoriteCitiesStore = create<FavoriteCitiesStore>((set) => ({
 			console.error('Error adding favorite city:', error);
 		}
 	},
-	removeFavoriteCity: async (cityToRemove: City) => {
+	removeFavoriteCity: async (cityToRemove) => {
 		try {
 			const savedCities = await AsyncStorage.getItem(AsyncKeys.SAVED_CITIES);
 			const citiesArray = savedCities ? JSON.parse(savedCities) : [];

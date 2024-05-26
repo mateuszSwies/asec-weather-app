@@ -8,30 +8,34 @@ export type City = {
 
 export type ShortWeatherInfo = {
 	main: string;
-	desc: string;
+	description: string;
 	icon: string;
 	id: number;
 };
 
 export type MainWeatherInfo = {
 	temp: number;
-	feelsLike: number;
-	tempMin: number;
-	tempMax: number;
+	feels_like: number;
+	temp_min: number;
+	temp_max: number;
 	pressure: number;
 	humidity: number;
-	seaLevel: number;
-	groundLevel: number;
+	seaLevel?: number;
+	groundLevel?: number;
 };
 
 export type WindInfo = {
 	speed: number;
-	deg: number;
 	gust: number;
+	deg?: number;
 };
 
 export type CityWeather = {
 	weather: ShortWeatherInfo[];
 	main: MainWeatherInfo;
 	wind: WindInfo;
+	clouds: { all: number };
+	sys: { sunrise: number; sunset: number };
+	name: string;
+	visibility: number;
 };

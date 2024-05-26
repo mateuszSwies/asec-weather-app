@@ -86,7 +86,7 @@ const FavoriteModal = ({
 					>
 						<View style={styles.modalContent}>
 							<View style={styles.headerContent}>
-								<Text style={styles.text}>Here's your favorite cities:</Text>
+								<Text style={styles.text}>Here's your favorite cities</Text>
 								<Pressable onPress={onDismiss}>
 									<CloseIcon
 										style={styles.button}
